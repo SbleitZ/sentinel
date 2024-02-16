@@ -8,7 +8,7 @@ module.exports = {
     category:"",
 	async execute(interaction) {
         const member = interaction.options.getMember('target');
-        console.log(member.user.username)
+        interaction.client.users.send(member.user.id, 'Has sido agregado a la lista de miembros en '+ interaction.member.guild.name);
             const response = await createUser({
                 discordName:member.user.username,
                 discordId:member.user.id,
