@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Events, GatewayIntentBits, Collection } = require('discord.js');
 const { TOKEN } = require('dotenv').config().parsed;
-
+module.exports.NAME_SERVER = "HOLA";
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 

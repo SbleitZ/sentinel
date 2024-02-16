@@ -10,23 +10,22 @@ module.exports = {
             .setColor(0x00CC00)
             .addFields(
                 { name: '/ban', value: 'Para banear usuarios.', inline: false },
-                { name: '/kick', value: 'Para expulsar usuarios.', inline: false },
-                { name: '/say', value: 'Para enviar un mensaje.', inline: false },
-                { name: '/timeout', value: 'Para aislar a un usuario.', inline: false },
             )
-            .setFooter({ iconURL: interaction.client.user.avatarURL(), text: "ULTRARK MASSIVE | Ayuda" })
+            .setFooter({ iconURL: interaction.client.user.avatarURL(), text: "ULTRARK MASSIVE | Asistencia" })
 
-        const confirm = new ButtonBuilder()
-            .setCustomId('confirm')
+        const checkIn = new ButtonBuilder()
+            .setCustomId('input')
             .setLabel('Entrada')
             .setStyle(ButtonStyle.Success);
 
-        const cancel = new ButtonBuilder()
-            .setCustomId('cancel')
+        const checkOut = new ButtonBuilder()
+            .setCustomId('output')
             .setLabel('Salida')
             .setStyle(ButtonStyle.Danger);
+
         const row = new ActionRowBuilder()
-            .addComponents(confirm, confirm);
+            .addComponents(checkIn, checkOut);
+
         await interaction.deferReply();
         return await interaction.editReply({
             embeds: [helpEmbed],
