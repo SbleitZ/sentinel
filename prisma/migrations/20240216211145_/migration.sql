@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Date" ALTER COLUMN "checkIn" DROP NOT NULL,
+ALTER COLUMN "checkOut" DROP NOT NULL;

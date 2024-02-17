@@ -2,13 +2,6 @@ const { PrismaClient, Prisma } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
-async function createUser(body){
-    if(!body) return;
-    await prisma.user.create({
-        data:body,
-    });
-}
-
 module.exports = {
     createUser:async function createUser(body){
         if(!body) return;
@@ -23,5 +16,8 @@ module.exports = {
             }
             return "Ha ocurrido un error desconocido"
         }
+    },
+    deleteUser: async function(body){
+        console.log("No listo.");
     }
 };
