@@ -1,0 +1,29 @@
+{
+  "name": "sentinel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
+    "build": "tsc --build",
+    "start": "npm run clean && npm run build && node build/index.js",
+    "clean": "del /s /q build"
+  },
+  "author": "Sbleit",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^5.9.1",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.19",
+    "nodemon": "^3.0.3",
+    "prisma": "^5.9.1",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
+  }
+}
