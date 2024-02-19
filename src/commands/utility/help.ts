@@ -10,7 +10,7 @@ import {
   CacheType,
   CollectedInteraction,
 } from "discord.js";
-import { checkInUser, checkOutUser } from "../../controllers/date.controller";
+import { checkInUser, checkOutUser, getTime } from "../../controllers/date.controller";
 import { STATUS } from "../../utils/status";
 import { getUTC } from "../../utils/timezones";
 module.exports = {
@@ -113,7 +113,7 @@ async function EmbedCheck(
           name: "Usuario",
           value:interaction.member?.user.username + ".",
           inline: false,
-        }
+        },
       )
       .setColor(type == "checkin" ? 0x00cc00 : 0xff0000)
       .setFooter({
@@ -123,6 +123,17 @@ async function EmbedCheck(
           " | " +
           (type == "checkin" ? "Entrada" : "Salida"),
       });
+      if(type == "checkout"){
+        const value = await getTime(interaction.member?.user.id) || "";
+        embedResponse.addFields(
+          {
+            name:'Tiempo trabajado',
+            value:value,
+            inline:false,
+          }
+        )
+
+      }
     console.log(process.env.NAME_SERVER);
     interaction.reply({
       content:
@@ -146,7 +157,12 @@ async function EmbedCheck(
         type == "checkin" ? STATUS.ERORR_WORKING : STATUS.ERROR_NOT_WORKING,
       ephemeral: true,
     });
+  }else if(response == STATUS.ERROR_DAY){
+    return await interaction.reply({content:STATUS.ERROR_DAY,ephemeral:true});
+  }else if(response == STATUS.REPEAT_DAY){
+    return await interaction.reply({content:STATUS.REPEAT_DAY,ephemeral:true});
   }
+  
   return interaction.reply(
     interaction.member?.user.username + "ha enviado su solicitud."
   );

@@ -37,6 +37,7 @@ export async function getUTC(){
         where:{serverId:process.env.SERVER_ID}
     });
     const date = new Date();
-    const checkInDate = new Date(date.toLocaleString(UTC?.locale, {timeZone: UTC?.timeZone}));
+    const checkInDate = date.toLocaleString(UTC?.locale, {timeZone: UTC?.timeZone})
+    console.log("getUTC " + checkInDate)
     return checkInDate;
 }

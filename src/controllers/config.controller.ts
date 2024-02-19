@@ -25,7 +25,7 @@ export async function test(userId:string | undefined){
     return await prisma.user.findMany({
         where:{discordUserId:userId},
         include:{
-            attendance:true,
+            dates:true,
         }
     });
 }
