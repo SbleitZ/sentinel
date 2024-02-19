@@ -14,7 +14,7 @@ A continuación la lista de comandos que necesitas ejecutar.
 Estos se pueden utilizar de forma manual o se puede usar el comando `npm run setup` que hace exactamente lo mismo, pero en un solo comando.
 
 ### Variables de entorno
-Las variables de entorno son muy importantes para el funcionamiento correcto, es preferible definirlas aqui y así evitar un gasto y tenerlas en la BD.
+Las variables de entorno son muy importantes para el funcionamiento correcto, es preferible definirlas aqui y así evitar un gasto y tenerlas en la BD, esto va dentro de `.env`.
 ```env
 TOKEN="" # Token de tu bot
 DATABASE_URL="" # URL de la base de datos en este caso postgresql
@@ -27,5 +27,7 @@ CHANNEL_LOGS_ID = "" # ID del canal donde iran los logs
 NAME_BOT = "" # Nombre del bot
 ```
 
+### Zonas horarias
+Adicionalmente puedes añadir dentro del archivo [timezone.ts](./src/utils/timezones.ts) las zonas horarias que prefieras y poder personalizar aún más el bot.
 
-https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+- https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
