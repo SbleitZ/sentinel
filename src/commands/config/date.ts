@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder,ChatInputCommandInteraction } from "discord.js";
 const timezones = require('../../utils/timezones');
 import {setConfig} from "../../controllers/config.controller";
 module.exports = {
@@ -14,9 +14,10 @@ module.exports = {
         .setRequired(true)),
     category:"Config",
 	async execute(interaction:any) {
+        if(!interaction.member) return await interaction.reply({content:"Este comando solo puede ser usado en el servidor.",ephemeral:true});
         const timeZone = interaction.options.getString('zona_horaria');
         // 0 locale | 1 timezone
-        const values = timezones.data.filter((tz:any) => timeZone.split(",")[1] == tz.timeZone)[0]
+        const values = timezones.data.filter((tz:any) => timeZone?.split(",")[1] == tz.timeZone)[0]
         await setConfig({
             timeZone:values.timeZone,
             city:values.city,

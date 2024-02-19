@@ -1,7 +1,6 @@
 import {
   SlashCommandBuilder,
-  CommandInteraction,
-  ChatInputCommandInteraction,
+  ChatInputCommandInteraction
 } from "discord.js";
 import { createUser } from "../../controllers/users.controller";
 module.exports = {
@@ -29,7 +28,7 @@ module.exports = {
           interaction?.member?.guild?.name
       );
       await interaction.reply(
-        "El usuario" + member.user.username + "ha sido añadido."
+        "El usuario" + member.user.username + " ha sido añadido."
       );
     } else {
       await interaction.reply(response + ".");

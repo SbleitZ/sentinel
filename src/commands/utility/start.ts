@@ -15,17 +15,27 @@ import { STATUS } from "../../utils/status";
 import { getUTC } from "../../utils/timezones";
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("help")
-    .setDescription("Comando para conocer utilidades del bot."),
+    .setName("start")
+    .setDescription("Comando para iniciar el Embed de la asistencia."),
   category: "utility",
   async execute(interaction: ChatInputCommandInteraction) {
+    if(!interaction.member) return await interaction.reply("Este comando solo puede ser usado dentro de un servidor.");
     const helpEmbed = new EmbedBuilder()
-      .setTitle("Comandos disponibles")
       .setColor(0x00cc00)
       .addFields({
-        name: "/ban",
-        value: "Para banear usuarios.",
+        name: "Asistencia",
+        value: "Reporta tu asistencia aquí",
         inline: false,
+      },
+      {
+        name:'Entrada',
+        value:'Marca tu entrada.',
+        inline:true,
+      },
+      {
+        name:'Salida',
+        value:'Marca tu salida.',
+        inline:true,
       })
       .setFooter({
         iconURL: interaction.client.user.avatarURL() || "",
@@ -50,7 +60,6 @@ module.exports = {
       checkIn,
       checkOut
     );
-    const collectorFilter = (i: any) => i.user.id === interaction.user.id;
     await interaction.deferReply();
     const response = await interaction.editReply({
       embeds: [helpEmbed],
@@ -60,11 +69,13 @@ module.exports = {
       componentType: ComponentType.Button,
     });
     collector.on("collect", async (interaction) => {
-      if (interaction.customId == "checkin") {
-        return await EmbedCheck(interaction, { type: "checkin" });
-      } else if (interaction.customId == "checkout") {
-        return await EmbedCheck(interaction, { type: "checkout" });
+      if(interaction.customId === "checkin" || interaction.customId === "checkout"){
+        return await EmbedCheck(interaction, { type: interaction.customId });
       }
+      // if (interaction.customId == "checkin") {
+      // } else if (interaction.customId == "checkout") {
+      //   return await EmbedCheck(interaction, { type: "checkout" });
+      // }
     });
     // si no recibe una respuesta, dara un error
   },
@@ -92,7 +103,7 @@ async function EmbedCheck(
     (type == "checkin" ? STATUS.ASSISTANCE_SUCCESS : STATUS.CHECKOUT_SUCCESS)
   ) {
     const channel: any = interaction.client.channels.cache.get(
-      "1208149533704593438"
+      process.env.CHANNEL_LOGS_ID || ""
     );
 
     console.log(interaction.client.user);
@@ -134,7 +145,6 @@ async function EmbedCheck(
         )
 
       }
-    console.log(process.env.NAME_SERVER);
     interaction.reply({
       content:
         "Se ha registrado tu " +

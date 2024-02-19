@@ -6,4 +6,5 @@ export const STATUS = {
     CHECKOUT_SUCCESS:"Salida marcada con exito.",
     ERROR_DAY:"El dia de entrada tiene que coincidir con el dia de salida.",
     REPEAT_DAY:"No puedes marcar asistencia más de 2 veces en el mismo día.",
+    ERROR_CONFIG:"Ha ocurrido un error debido a que el bot no tiene configurada la zona horaria.\nPor favor usa el comando config."
 }

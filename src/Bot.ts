@@ -1,5 +1,5 @@
 import { config} from "dotenv";
-import { Client, Collection, Events, GatewayIntentBits, Snowflake } from "discord.js";
+import {Client, Collection, Events, GatewayIntentBits, Snowflake } from "discord.js";
 import { join } from "path";
 import { readdirSync} from "fs";
 import { Command } from "./types/command";

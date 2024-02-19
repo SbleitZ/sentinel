@@ -8,6 +8,7 @@
     "dev": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
     "build": "tsc --build",
     "start": "npm run clean && npm run build && node build/index.js",
+    "setup":"npm install && npm run build && node deploy-commands.js && npm run start",
     "clean": "del /s /q build"
   },
   "author": "Sbleit",

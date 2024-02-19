@@ -20,12 +20,3 @@ export async function setConfig(body:IConfig){
         }
     })
 }
-
-export async function test(userId:string | undefined){
-    return await prisma.user.findMany({
-        where:{discordUserId:userId},
-        include:{
-            dates:true,
-        }
-    });
-}
