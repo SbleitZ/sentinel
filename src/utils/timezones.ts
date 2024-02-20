@@ -1,33 +1,33 @@
-const { PrismaClient, Prisma } = require("@prisma/client");
+const { PrismaClient} = require("@prisma/client");
 const prisma = new PrismaClient();
 export const data = [
   {
-    city: "Ciudad de Mexico",
+    city: "🇲🇽 Ciudad de Mexico",
     locale: "en-MX",
     timeZone: "America/Mexico_City",
   },
   {
-    city: "Buenos Aires",
+    city: "🇦🇷 Buenos Aires",
     locale: "en-AR",
     timeZone: "America/Argentina/Buenos_Aires",
   },
   {
-    city: "Lima",
+    city: "🇵🇪 Lima",
     locale: "en-PE",
     timeZone: "America/Lima",
   },
   {
-    city: "Santiago",
+    city: "🇨🇱 Santiago",
     locale: "en-CL",
     timeZone: "America/Santiago",
   },
   {
-    city: "Montevideo",
+    city: "🇺🇾 Montevideo",
     locale: "en-UY",
     timeZone: "America/Montevideo",
   },
   {
-    city: "Asunción",
+    city: "🇵🇾 Asunción",
     locale: "en-PY",
     timeZone: "America/Asuncion",
   },
@@ -41,3 +41,4 @@ export async function getUTC(){
     console.log("getUTC " + checkInDate)
     return checkInDate;
 }
+// https://emojicopy.com/
