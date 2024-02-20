@@ -19,6 +19,8 @@ model Config{
   serverName String
   serverId String @unique
   serverAvatar String
+  entryTime String // 00:00
+  exitTime String // 00:00
 }
 model User{
   id String @id @default(uuid())
