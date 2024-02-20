@@ -22,14 +22,19 @@ module.exports = {
       discordUserAvatar: interaction.member.guild.iconURL() || "",
     });
     if (response.length == 0) {
-      interaction.client.users.send(
-        member?.user?.id,
-        "Has sido agregado a la lista de miembros en " +
-          interaction?.member?.guild?.name
-      );
-      await interaction.reply(
-        "El usuario" + member.user.username + " ha sido añadido."
-      );
+      try {
+        await interaction.client.users.send(
+          member?.user?.id,
+          "Has sido agregado a la lista de miembros en " +
+            interaction?.member?.guild?.name
+        );
+        await interaction.reply(
+          "El usuario " + member.user.username + " ha sido añadido."
+        );
+      } catch (error) {
+        console.log("Ocurrio un error en el comando add, al intentar enviar un mensaje directo.")
+        await interaction.reply({content:"No se pudo enviar un DM al usuario "+ member.user.username +", pero el usuario fue añadido.", ephemeral:true})
+      }
     } else {
       await interaction.reply(response + ".");
     }

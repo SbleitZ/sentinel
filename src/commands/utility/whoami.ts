@@ -10,9 +10,9 @@ module.exports = {
 
 		const h = interaction.client.channels.cache.get("id") as TextChannel;
 
-		console.log(JSON.stringify(interaction.guild?.channels,null,2))
+		// console.log(JSON.stringify(interaction.guild?.channels,null,2))
 		const user = await getUser(interaction.user.id);
-		console.log(JSON.stringify(user));
+		// console.log(JSON.stringify(user));
 		await interaction.reply("```ts\n" + JSON.stringify(user,null,2) + "```");
 	},
 

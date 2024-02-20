@@ -7,6 +7,8 @@ CREATE TABLE "Config" (
     "serverName" TEXT NOT NULL,
     "serverId" TEXT NOT NULL,
     "serverAvatar" TEXT NOT NULL,
+    "entryTime" TEXT NOT NULL,
+    "exitTime" TEXT NOT NULL,
 
     CONSTRAINT "Config_pkey" PRIMARY KEY ("id")
 );
@@ -26,9 +28,9 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Date" (
     "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "checkIn" TIMESTAMP(3),
-    "checkOut" TIMESTAMP(3),
+    "userId" TEXT,
+    "checkIn" TEXT,
+    "checkOut" TEXT,
 
     CONSTRAINT "Date_pkey" PRIMARY KEY ("id")
 );
@@ -40,4 +42,4 @@ CREATE UNIQUE INDEX "Config_serverId_key" ON "Config"("serverId");
 CREATE UNIQUE INDEX "User_discordUserId_key" ON "User"("discordUserId");
 
 -- AddForeignKey
-ALTER TABLE "Date" ADD CONSTRAINT "Date_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Date" ADD CONSTRAINT "Date_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;

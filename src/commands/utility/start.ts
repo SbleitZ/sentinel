@@ -9,6 +9,7 @@ import {
   ComponentType,
   CacheType,
   CollectedInteraction,
+  PermissionFlagsBits,
 } from "discord.js";
 import { checkInUser, checkOutUser, getTime } from "../../controllers/date.controller";
 import { STATUS } from "../../utils/status";
@@ -16,7 +17,8 @@ import { getUTC } from "../../utils/timezones";
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("start")
-    .setDescription("Comando para iniciar el Embed de la asistencia."),
+    .setDescription("Comando para iniciar el Embed de la asistencia.")
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
   category: "utility",
   async execute(interaction: ChatInputCommandInteraction) {
     if(!interaction.member) return await interaction.reply("Este comando solo puede ser usado dentro de un servidor.");
@@ -139,7 +141,7 @@ async function EmbedCheck(
         embedResponse.addFields(
           {
             name:'Tiempo trabajado',
-            value:value,
+            value:"`" + value +"`",
             inline:false,
           }
         )
@@ -148,8 +150,8 @@ async function EmbedCheck(
     interaction.reply({
       content:
         "Se ha registrado tu " +
-        (type == "checkin" ? "entrada" : "salida") +
-        "correctamente.",
+        (type == "checkin" ? " entrada" : " salida") +
+        " correctamente.",
       ephemeral: true,
     });
     return channel?.send({ embeds: [embedResponse] });

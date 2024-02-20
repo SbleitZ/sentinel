@@ -5,4 +5,6 @@ export interface IConfig{
     serverId: string;
     serverName: string;
     serverAvatar: string;
+    entryTime:string;
+    exitTime:string;
 }

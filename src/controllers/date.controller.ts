@@ -19,7 +19,7 @@ export async function checkInUser(data:ICheck){
         UTC:checkInDate,
         userId:data.userId,
     })
-    if(!date) return STATUS.REPEAT_DAY;
+    if(date) return STATUS.REPEAT_DAY;
     if(!user) return STATUS.USER_DONT_EXISTS;
     if(!user?.working){//no esta trabajando,
         await prisma.date.create({
@@ -100,7 +100,9 @@ export async function getTime(userId:string | undefined){
 
         const hours = Math.floor(differenceDates/msPerHour);
         const minutes = Math.floor((differenceDates%(msPerHour))/(1000 * 60));
-        return hours + " horas, " + minutes + " minutos."
+        // Math.floor(diferenciaMilisegundos / 1000)%60
+        const seconds = Math.floor((differenceDates/1000)%60);
+        return hours + " horas, " + minutes + " minutos, " + seconds + " segundos.";
     } catch (error) {
         return "Ha ocurrido un error."
     }
