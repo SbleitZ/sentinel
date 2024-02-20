@@ -7,8 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
     "build": "tsc --build",
+    "deploy:commands": "node deploy-commands",
     "start": "npm run clean && npm run build && node build/index.js",
-    "setup":"npm install && npm run build && node deploy-commands.js && npm run start",
+    "setup": "npm install && npm run build && node deploy-commands.js && npm run start",
+    "start:bot": "npm run deploy:commands && npm run start",
     "clean": "del /s /q build"
   },
   "author": "Sbleit",
@@ -16,10 +18,12 @@
   "dependencies": {
     "@prisma/client": "^5.9.1",
     "discord.js": "^14.14.1",
-    "dotenv": "^16.4.4"
+    "dotenv": "^16.4.4",
+    "node-cron": "^3.0.3"
   },
   "devDependencies": {
     "@types/node": "^20.11.19",
+    "@types/node-cron": "^3.0.11",
     "nodemon": "^3.0.3",
     "prisma": "^5.9.1",
     "ts-node": "^10.9.2",
