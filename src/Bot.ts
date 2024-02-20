@@ -1,8 +1,11 @@
 import { config} from "dotenv";
-import {Client, Collection, Events, GatewayIntentBits, Snowflake } from "discord.js";
+import {schedule} from "node-cron";
+import {ActivityType, Client, Collection, Events, GatewayIntentBits, Snowflake } from "discord.js";
 import { join } from "path";
 import { readdirSync} from "fs";
 import { Command } from "./types/command";
+import { getConfig } from "./controllers/config.controller";
+import { getUsers } from "./controllers/users.controller";
 config();
 interface IConfig{
     TOKEN:string | undefined;
@@ -20,14 +23,17 @@ export class Bot extends Client{
         }
         this.commands = new Collection();
         this.cooldowns = new Collection();
-        this.once(Events.ClientReady, (c:any) => {
-            console.log(`Bot encendido Username:${c.user.tag}`);
-            c.user.setActivity({
-                name: "Nada",
-                type:"Streaming"
-            })
+        this.once(Events.ClientReady, (c) => {
             this.initCommands();
             this.interactionCreate();
+            // this.sendNotifications(c);
+            console.log(`Bot encendido Username:${c.user.tag}`);
+            c.user.setActivity({
+                name:"a ver, que pasa",
+                type:ActivityType.Streaming
+            })
+            this.initTasks(c);
+            // poner las tareas aqui
         });
     }
     interactionCreate(){
@@ -72,5 +78,45 @@ export class Bot extends Client{
     }
     init(){
         this.login(this.config.TOKEN)
+    }
+    async initTasks(client: Client<true>){
+        //tareas programadas
+        // avisar a todos los usuarios 15 minutos antes de la entrada establecida
+        const config = await getConfig();
+        if(!config){
+            return console.log("Error en la automatización de avisos por falta de configuración.")
+        }
+        const entryTimes = config.entryTime.split(":")
+        const entryHour = entryTimes[0];
+        const entryMinute = entryTimes[1];
+        const entryRanges = `${entryMinute} ${entryHour} * * *`;
+        schedule(entryRanges, () => {
+            this.sendNotifications(client)
+            console.log('Se inicio el aviso a usuarios');
+          }, {
+            scheduled: true,
+            timezone: config.timeZone
+        });
+        console.log("Se han establecido las notificaciones de manera correcta.")
+        // const exitTimes = config.exitTime.split(":")
+        // const exitMinute = exitTimes[1]
+        // const exitHour = exitTimes[0]
+        // const exitRanges = `${exitMinute} ${exitHour} * * *`;
+        // schedule(exitRanges, () => {
+        //     console.log(client.users)
+        //     console.log('Se inicio el aviso a usuarios');
+        //   }, {
+        //     scheduled: true,
+        //     timezone: config.timeZone
+        // });
+    }
+    async sendNotifications(client: Client){
+        const users = await getUsers();
+        if(!users) return console.log("No se han encontrado usuarios");
+        users.map(async ({discordUserId})=>{
+            const userById = await client.users.fetch(discordUserId)
+            userById.send("Faltan pocos minutos para que inicie el horario de entrada, recuerda marcarlo.").catch(()=>console.log("No se pudo enviar el mensaje directo a " + userById.username))
+
+        })
     }
 }
