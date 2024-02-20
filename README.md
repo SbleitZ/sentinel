@@ -1,6 +1,11 @@
 # Sentinel Bot
 Sentinel es un bot de discord que permite la gestión de entrada y salida, por cada una de esas acciones el bot informa a traves de un canal,
 el cual tiene que estar configurado con anterioridad.
+## Caracteristicas principales
+- El bot avisa con anticipación o en la misma hora de entrada/salida establecida (modificable)
+- Permite la personalización
+
+
 
 ## Instrucciones
 Tener instalado NodeJS > 18
@@ -29,5 +34,8 @@ NAME_BOT = "" # Nombre del bot
 
 ### Zonas horarias
 Adicionalmente puedes añadir dentro del archivo [timezone.ts](./src/utils/timezones.ts) las zonas horarias que prefieras y poder personalizar aún más el bot.
+
+#### Importante
+No es recomendable negarle los mensajes directos al bot ya que esto te permitira ser notificado de cualquier acción por parte del administrador.
 
 - https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
