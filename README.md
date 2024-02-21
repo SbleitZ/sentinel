@@ -13,7 +13,7 @@ A continuación la lista de comandos que necesitas ejecutar.
 
  - `npm install` # Instalara las dependencias del bot.
  - `npm run build` # Permitira generar la build del bot.
- - `node deploy-commands.js` # Registrara todos los comandos.
+ - `npm run deploy:commands` # Registrara todos los comandos.
  - `npm run start` # Iniciara el bot.
 
 Estos se pueden utilizar de forma manual o se puede usar el comando `npm run setup` que hace exactamente lo mismo, pero en un solo comando.

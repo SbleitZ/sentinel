@@ -6,7 +6,9 @@ import { readdirSync} from "fs";
 import { Command } from "./types/command";
 import { getConfig } from "./controllers/config.controller";
 import { getUsers } from "./controllers/users.controller";
+import { PrismaClient } from "@prisma/client";
 config();
+const prisma = new PrismaClient();
 interface IConfig{
     TOKEN:string | undefined;
     CLIENT_ID:string | undefined;
@@ -26,12 +28,14 @@ export class Bot extends Client{
         this.once(Events.ClientReady, (c) => {
             this.initCommands();
             this.interactionCreate();
+
             // this.sendNotifications(c);
             console.log(`Bot encendido Username:${c.user.tag}`);
             c.user.setActivity({
                 name:"a ver, que pasa",
                 type:ActivityType.Streaming
-            })
+            });
+            this.initPrisma();
             this.initTasks(c);
             // poner las tareas aqui
         });
@@ -76,8 +80,8 @@ export class Bot extends Client{
             }
         }
     }
-    init(){
-        this.login(this.config.TOKEN)
+    async init(){
+        await this.login(this.config.TOKEN)
     }
     async initTasks(client: Client<true>){
         //tareas programadas
@@ -118,5 +122,13 @@ export class Bot extends Client{
             userById.send("Faltan pocos minutos para que inicie el horario de entrada, recuerda marcarlo.").catch(()=>console.log("No se pudo enviar el mensaje directo a " + userById.username))
 
         })
+    }
+    async initPrisma(){
+        try {
+            await prisma.$connect()
+            console.log("Conexión con la base de datos exitosa.")
+        } catch (error) {
+            console.log("Conexión con la base de datos fallida.")
+        }
     }
 }
