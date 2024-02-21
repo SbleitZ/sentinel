@@ -16,6 +16,7 @@ import {
       .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     category: "",
     async execute(interaction: any) {
+      if(!interaction.member) return await interaction.reply("Este comando solo puede ser usado en un servidor")
       const member = interaction.options.getMember("target");
       const response = await removeUserAndDates(member.user.id || "",);
       if (response.length == 0) {
@@ -23,7 +24,7 @@ import {
             await interaction.client?.users?.send(
               member?.user?.id,
               "Has sido eliminado de la lista de miembros en " +
-                interaction?.member?.guild?.name
+                interaction?.member?.guild?.name + " por " + interaction.user.username + "."
             );
             await interaction.reply(
               "El usuario " + member.user.username + " ha sido eliminado."

@@ -1,3 +1,4 @@
+
 import { CommandInteraction, EmbedBuilder, PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import { getConfig } from "../../controllers/config.controller";
 module.exports = {

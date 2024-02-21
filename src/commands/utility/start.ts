@@ -43,11 +43,6 @@ module.exports = {
         iconURL: interaction.client.user.avatarURL() || "",
         text: process.env.NAME_SERVER + " | Asistencia",
       });
-    // 7571122-0
-    // cuenta vista
-    // 210607980
-    // coopeuch
-    // alfredo cordova
     const checkIn = new ButtonBuilder()
       .setCustomId("checkin")
       .setLabel("Entrada")

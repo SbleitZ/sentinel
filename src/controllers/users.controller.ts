@@ -32,7 +32,7 @@ export async function getUser(userId:string | undefined,dates: boolean = false){
         })
     }catch(e:any){
         console.log(e);
-        return "Ha ocurrido un error desconocido"
+        return null
     }
 }
 

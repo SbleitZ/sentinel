@@ -1,11 +1,10 @@
 # Sentinel Bot
 Sentinel es un bot de discord que permite la gestión de entrada y salida, por cada una de esas acciones el bot informa a traves de un canal,
 el cual tiene que estar configurado con anterioridad.
+
 ## Caracteristicas principales
 - El bot avisa con anticipación o en la misma hora de entrada/salida establecida (modificable)
 - Permite la personalización
-
-
 
 ## Instrucciones
 Tener instalado NodeJS > 18
