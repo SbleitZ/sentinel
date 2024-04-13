@@ -164,10 +164,8 @@ async function EmbedCheck(
         type == "checkin" ? STATUS.ERORR_WORKING : STATUS.ERROR_NOT_WORKING,
       ephemeral: true,
     });
-  }else if(response == STATUS.ERROR_DAY){
-    return await interaction.reply({content:STATUS.ERROR_DAY,ephemeral:true});
-  }else if(response == STATUS.REPEAT_DAY){
-    return await interaction.reply({content:STATUS.REPEAT_DAY,ephemeral:true});
+  }else if(response == STATUS.ERROR_DAY || response == STATUS.REPEAT_DAY || response == STATUS.ERROR_HOURS){
+    return await interaction.reply({content:response,ephemeral:true});
   }
   
   return interaction.reply(

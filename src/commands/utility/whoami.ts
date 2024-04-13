@@ -1,5 +1,5 @@
 import { Channel, CommandInteraction, DMChannel, EmbedBuilder, SlashCommandBuilder, TextChannel } from "discord.js";
-import { getUser } from "../../controllers/users.controller";
+import { getUser, restartUsersChecks } from "../../controllers/users.controller";
 module.exports = {
 
 	data: new SlashCommandBuilder()
@@ -22,8 +22,10 @@ module.exports = {
 			});
 		// console.log(JSON.stringify(interaction.guild?.channels,null,2))
 		// console.log(JSON.stringify(user));
+		const response =await restartUsersChecks();
+		console.log(response)
 		await interaction.reply({embeds:[whoamiEmbed]})
-
+		
 		// await interaction.reply("```ts\n" + JSON.stringify(user,null,2) + "```");
 	},
 
