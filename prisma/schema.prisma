@@ -39,4 +39,6 @@ model Date{
   user User? @relation(fields: [userId],references: [id])
   checkIn String?
   checkOut String?
+  isRestarted Boolean? @default(false)
+  absenceReason String?
 }
