@@ -5,7 +5,7 @@ import { join } from "path";
 import { readdirSync} from "fs";
 import { Command } from "./types/command";
 import { getConfig } from "./controllers/config.controller";
-import { getUsers } from "./controllers/users.controller";
+import { getUsers, restartUsersChecks } from "./controllers/users.controller";
 import { PrismaClient } from "@prisma/client";
 config();
 const prisma = new PrismaClient();
@@ -68,7 +68,7 @@ export class Bot extends Client{
 
         for (const folder of commandFolders) {
             const commandsPath = join(foldersPath, folder);
-            const commandFiles = readdirSync(commandsPath).filter((file:string) => file.endsWith('.js'));
+            const commandFiles = readdirSync(commandsPath).filter((file:string) => file.endsWith('.ts'));
             for (const file of commandFiles) {
                 const filePath = join(commandsPath, file);
                 const command = require(filePath);
@@ -90,6 +90,8 @@ export class Bot extends Client{
         if(!config){
             return console.log("Error en la automatización de avisos por falta de configuración.")
         }
+
+        //Tarea para avisar la hora de ingreso
         const entryTimes = config.entryTime.split(":")
         const entryHour = entryTimes[0];
         const entryMinute = entryTimes[1];
@@ -102,9 +104,18 @@ export class Bot extends Client{
             timezone: config.timeZone
         });
         console.log("Se han establecido las notificaciones de manera correcta.")
-        // const exitTimes = config.exitTime.split(":")
+
+        //tarea para hacer el reinicio y marcar inasistencias a los que no marcaron
+        const exitTimes = config.exitTime.split(":")
+        const exitHour = Number(exitTimes[0])+1;
+        const restartRanges= `0 ${entryHour} * * *`;
+        
+        schedule(restartRanges,async()=>{
+            console.log("Empieza el reinicio...");
+            const updatedsCount = await restartUsersChecks();
+            console.log(updatedsCount);
+        })
         // const exitMinute = exitTimes[1]
-        // const exitHour = exitTimes[0]
         // const exitRanges = `${exitMinute} ${exitHour} * * *`;
         // schedule(exitRanges, () => {
         //     console.log(client.users)
